@@ -2,7 +2,6 @@ package com.bakery.orderingsys.service;
 
 import com.bakery.orderingsys.model.Item;
 import com.bakery.orderingsys.repository.ItemRepository;
-import com.bakery.orderingsys.service.ItemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,10 +33,8 @@ class ItemServiceTest {
 
     @Test
     void getAllItemsTest() {
-        //when
-        itemServiceTest.getAllItems();
 
-        //then
+        itemServiceTest.getAllItems();
         verify(itemRepositoryTest).findAll();
     }
 
