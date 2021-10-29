@@ -1,6 +1,7 @@
 package com.bakery.orderingsys.service;
 
 import com.bakery.orderingsys.model.Item;
+import com.bakery.orderingsys.model.Order;
 import com.bakery.orderingsys.repository.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,23 @@ class ItemServiceTest {
         itemServiceTest.getAllItems();
         verify(itemRepositoryTest).findAll();
     }
+
+    @Test
+    void getItem() {
+        Item item = new Item();
+        given(itemRepositoryTest.findById(anyLong())).willReturn(Optional.of(item));
+        itemServiceTest.getItem(anyLong());
+        verify(itemRepositoryTest).findById(anyLong());
+        verify(itemRepositoryTest).getById(anyLong());
+    }
+
+    @Test
+    void getMissingItem() {
+        assertThatThrownBy(() -> itemServiceTest.getItem(anyLong()))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Item doesn't exist");
+    }
+
 
     @Test
     void addNewItemTest() {

@@ -24,6 +24,16 @@ public class ItemService {
        return itemRepository.findAll();
     }
 
+    public Item getItem(Long itemId){
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        if (!itemOptional.isPresent()) {
+            throw new IllegalStateException("Item doesn't exist");
+        }
+
+        Item item = itemRepository.getById(itemId);
+        return item;
+    }
+
     public void addNewItem(Item item) {
         Optional<Item> itemOptional = itemRepository.findItemByItemName(item.getItemName());
         if (itemOptional.isPresent()) {

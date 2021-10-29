@@ -39,6 +39,22 @@ class OrderServiceTest {
     }
 
     @Test
+    void getOrder() {
+        Order order = new Order();
+        given(orderRepositoryTest.findById(anyLong())).willReturn(Optional.of(order));
+        orderServiceTest.getOrder(anyLong());
+        verify(orderRepositoryTest).findById(anyLong());
+        verify(orderRepositoryTest).getById(anyLong());
+    }
+
+    @Test
+    void getMissingOrder() {
+        assertThatThrownBy(() -> orderServiceTest.getOrder(anyLong()))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Order doesn't exist");
+    }
+
+    @Test
     void addNewOrder() {
         Order order =new Order();
         orderServiceTest.addNewOrder(order);
@@ -64,14 +80,5 @@ class OrderServiceTest {
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Order doesn't exist");
         verify(orderRepositoryTest, never()).deleteById(anyLong());
-    }
-
-    @Test
-    void getOrder() {
-        Order order = new Order();
-        given(orderRepositoryTest.findById(anyLong())).willReturn(Optional.of(order));
-        orderServiceTest.getOrder(anyLong());
-        verify(orderRepositoryTest).findById(anyLong());
-        verify(orderRepositoryTest).getById(anyLong());
     }
 }
