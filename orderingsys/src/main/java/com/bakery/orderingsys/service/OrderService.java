@@ -20,6 +20,16 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public Order getOrder(Long orderNo) {
+        Optional<Order> orderOptional = orderRepository.findById(orderNo);
+        if (!orderOptional.isPresent()) {
+            throw new IllegalStateException("Order doesn't exist");
+        }
+
+        Order order = orderRepository.getById(orderNo);
+        return order;
+    }
+
     public void addNewOrder(Order order) {
         orderRepository.save(order);
     }
@@ -31,16 +41,6 @@ public class OrderService {
             throw new IllegalStateException("Order doesn't exist");
         }
         orderRepository.deleteById(orderNo);
-    }
-
-    public Order getOrder(Long orderNo) {
-        Optional<Order> orderOptional = orderRepository.findById(orderNo);
-        if (!orderOptional.isPresent()) {
-            throw new IllegalStateException("Order doesn't exist");
-        }
-
-        Order order = orderRepository.getById(orderNo);
-        return order;
     }
 
     //Update Order will require access to the items table
