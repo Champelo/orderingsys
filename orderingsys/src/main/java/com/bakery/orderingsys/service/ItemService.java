@@ -20,7 +20,7 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Item> getAllItems(){
+    public List<Item> getAllItems() {
        return itemRepository.findAll();
     }
 

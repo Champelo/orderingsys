@@ -1,7 +1,6 @@
 package com.bakery.orderingsys.service;
 
 import com.bakery.orderingsys.model.Item;
-import com.bakery.orderingsys.model.Order;
 import com.bakery.orderingsys.repository.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

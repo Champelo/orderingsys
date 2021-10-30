@@ -2,6 +2,8 @@ package com.bakery.orderingsys.model;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(name="Item")
@@ -40,6 +42,8 @@ public class Item {
     @Column(name = "item_quantity", nullable = false)
     private int quantity;
 
+    @ManyToMany(mappedBy = "orderedItems")
+    Set<OrderTicket> orderTickets;
 
     public Item() {
     }

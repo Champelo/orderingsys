@@ -1,7 +1,8 @@
 package com.bakery.orderingsys.controller;
 
-import com.bakery.orderingsys.model.Order;
+import com.bakery.orderingsys.model.OrderTicket;
 import com.bakery.orderingsys.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,25 +11,26 @@ import java.util.List;
 @RequestMapping("api/v1/order")
 public class OrderController {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
+    @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
     @GetMapping
-    List<Order> getAllOrders() {
+    List<OrderTicket> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     @GetMapping(path = "{orderNo}")
-    Order getOrder(@PathVariable("orderNo") Long orderNo) {
+    OrderTicket getOrder(@PathVariable("orderNo") Long orderNo) {
         return orderService.getOrder(orderNo);
     }
 
     @PostMapping
-    void addNewOrder(@RequestBody Order order) {
-        orderService.addNewOrder(order);
+    void addNewOrder(@RequestBody OrderTicket orderTicket) {
+        orderService.addNewOrder(orderTicket);
     }
 
     @DeleteMapping(path = "{orderNo}")

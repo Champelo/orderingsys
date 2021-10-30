@@ -1,8 +1,7 @@
 package com.bakery.orderingsys.service;
 
-import com.bakery.orderingsys.model.Order;
+import com.bakery.orderingsys.model.OrderTicket;
 import com.bakery.orderingsys.repository.OrderRepository;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class OrderServiceTest {
+class OrderTicketServiceTest {
 
     @Mock
     private OrderRepository orderRepositoryTest;
@@ -40,8 +39,8 @@ class OrderServiceTest {
 
     @Test
     void getOrder() {
-        Order order = new Order();
-        given(orderRepositoryTest.findById(anyLong())).willReturn(Optional.of(order));
+        OrderTicket orderTicket = new OrderTicket();
+        given(orderRepositoryTest.findById(anyLong())).willReturn(Optional.of(orderTicket));
         orderServiceTest.getOrder(anyLong());
         verify(orderRepositoryTest).findById(anyLong());
         verify(orderRepositoryTest).getById(anyLong());
@@ -56,13 +55,13 @@ class OrderServiceTest {
 
     @Test
     void addNewOrder() {
-        Order order =new Order();
-        orderServiceTest.addNewOrder(order);
-        ArgumentCaptor<Order> orderArgumentCaptor = ArgumentCaptor.forClass(Order.class);
+        OrderTicket orderTicket =new OrderTicket();
+        orderServiceTest.addNewOrder(orderTicket);
+        ArgumentCaptor<OrderTicket> orderArgumentCaptor = ArgumentCaptor.forClass(OrderTicket.class);
         verify(orderRepositoryTest).save(orderArgumentCaptor.capture());
-        Order capturedOrder = orderArgumentCaptor.getValue();
+        OrderTicket capturedOrderTicket = orderArgumentCaptor.getValue();
 
-        assertThat(capturedOrder).isEqualTo(order);
+        assertThat(capturedOrderTicket).isEqualTo(orderTicket);
 
     }
 

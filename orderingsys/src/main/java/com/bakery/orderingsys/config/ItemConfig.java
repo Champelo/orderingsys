@@ -12,7 +12,7 @@ import java.util.List;
 public class ItemConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner (ItemRepository repository){
+    CommandLineRunner commandLineRunner (ItemRepository itemRepository){
         return args -> {
             Item marbled_brownies = new Item(
                     "Marbled Brownies",
@@ -30,9 +30,11 @@ public class ItemConfig {
                     12
             );
 
-            repository.saveAll(
+
+            itemRepository.saveAll(
                     List.of(marbled_brownies, apple_pie)
             );
+
         };
     }
 }
