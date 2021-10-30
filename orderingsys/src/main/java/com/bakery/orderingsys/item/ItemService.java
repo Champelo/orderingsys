@@ -1,8 +1,5 @@
-package com.bakery.orderingsys.service;
+package com.bakery.orderingsys.item;
 
-import com.bakery.orderingsys.repository.ItemRepository;
-import com.bakery.orderingsys.model.Item;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,7 +12,6 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    @Autowired
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }

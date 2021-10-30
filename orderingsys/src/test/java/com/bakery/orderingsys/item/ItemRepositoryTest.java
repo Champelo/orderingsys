@@ -1,7 +1,7 @@
-package com.bakery.orderingsys.repository;
+package com.bakery.orderingsys.item;
 
-import com.bakery.orderingsys.model.Item;
-import com.bakery.orderingsys.repository.ItemRepository;
+import com.bakery.orderingsys.item.Item;
+import com.bakery.orderingsys.item.ItemRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

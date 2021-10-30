@@ -1,6 +1,6 @@
-package com.bakery.orderingsys.repository;
+package com.bakery.orderingsys.item;
 
-import com.bakery.orderingsys.model.Item;
+import com.bakery.orderingsys.item.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

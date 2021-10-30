@@ -1,0 +1,9 @@
+package com.bakery.orderingsys.orderticket;
+
+import com.bakery.orderingsys.orderticket.OrderTicket;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface OrderTicketRepository extends JpaRepository<OrderTicket, Long> {
+}

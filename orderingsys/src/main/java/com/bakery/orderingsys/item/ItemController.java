@@ -1,8 +1,5 @@
-package com.bakery.orderingsys.controller;
+package com.bakery.orderingsys.item;
 
-import com.bakery.orderingsys.model.Item;
-import com.bakery.orderingsys.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -14,7 +11,6 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @Autowired
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }

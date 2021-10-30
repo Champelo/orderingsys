@@ -1,4 +1,4 @@
-package com.bakery.orderingsys.model;
+package com.bakery.orderingsys.item;
 
 import javax.persistence.*;
 
@@ -42,8 +42,8 @@ public class Item {
     @Column(name = "item_quantity", nullable = false)
     private int quantity;
 
-    @ManyToMany(mappedBy = "orderedItems")
-    Set<OrderTicket> orderTickets;
+//    @ManyToMany(mappedBy = "orderedItems")
+//    Set<OrderTicket> orderTickets;
 
     public Item() {
     }

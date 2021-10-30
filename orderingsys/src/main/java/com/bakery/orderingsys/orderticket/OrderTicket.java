@@ -1,4 +1,4 @@
-package com.bakery.orderingsys.model;
+package com.bakery.orderingsys.orderticket;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,12 +26,12 @@ public class OrderTicket {
     @CreationTimestamp
     private Date orderedTimeStamp;
 
-    @ManyToMany
-    @JoinTable(
-            name = "orderedItems",
-            joinColumns = @JoinColumn(name = "order_no"),
-            inverseJoinColumns = @JoinColumn(name = "item_id"))
-    Set<Item> orderedItems;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "orderedItems",
+//            joinColumns = @JoinColumn(name = "order_no"),
+//            inverseJoinColumns = @JoinColumn(name = "item_id"))
+//    Set<Item> orderedItems;
 
     public OrderTicket() {
     }

@@ -1,7 +1,8 @@
-package com.bakery.orderingsys.service;
+package com.bakery.orderingsys.orderticket;
 
-import com.bakery.orderingsys.model.OrderTicket;
-import com.bakery.orderingsys.repository.OrderRepository;
+import com.bakery.orderingsys.orderticket.OrderTicket;
+import com.bakery.orderingsys.orderticket.OrderTicketService;
+import com.bakery.orderingsys.orderticket.OrderTicketRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,32 +24,32 @@ import static org.mockito.Mockito.verify;
 class OrderTicketServiceTest {
 
     @Mock
-    private OrderRepository orderRepositoryTest;
-    private OrderService orderServiceTest;
+    private OrderTicketRepository orderTicketRepositoryTest;
+    private OrderTicketService orderTicketServiceTest;
 
     @BeforeEach
     void setUp() {
-        orderServiceTest = new OrderService(orderRepositoryTest);
+        orderTicketServiceTest = new OrderTicketService(orderTicketRepositoryTest);
     }
 
     @Test
     void getAllOrders() {
-        orderServiceTest.getAllOrders();
-        verify(orderRepositoryTest).findAll();
+        orderTicketServiceTest.getAllOrders();
+        verify(orderTicketRepositoryTest).findAll();
     }
 
     @Test
     void getOrder() {
         OrderTicket orderTicket = new OrderTicket();
-        given(orderRepositoryTest.findById(anyLong())).willReturn(Optional.of(orderTicket));
-        orderServiceTest.getOrder(anyLong());
-        verify(orderRepositoryTest).findById(anyLong());
-        verify(orderRepositoryTest).getById(anyLong());
+        given(orderTicketRepositoryTest.findById(anyLong())).willReturn(Optional.of(orderTicket));
+        orderTicketServiceTest.getOrder(anyLong());
+        verify(orderTicketRepositoryTest).findById(anyLong());
+        verify(orderTicketRepositoryTest).getById(anyLong());
     }
 
     @Test
     void getMissingOrder() {
-        assertThatThrownBy(() -> orderServiceTest.getOrder(anyLong()))
+        assertThatThrownBy(() -> orderTicketServiceTest.getOrder(anyLong()))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Order doesn't exist");
     }
@@ -56,9 +57,9 @@ class OrderTicketServiceTest {
     @Test
     void addNewOrder() {
         OrderTicket orderTicket =new OrderTicket();
-        orderServiceTest.addNewOrder(orderTicket);
+        orderTicketServiceTest.addNewOrder(orderTicket);
         ArgumentCaptor<OrderTicket> orderArgumentCaptor = ArgumentCaptor.forClass(OrderTicket.class);
-        verify(orderRepositoryTest).save(orderArgumentCaptor.capture());
+        verify(orderTicketRepositoryTest).save(orderArgumentCaptor.capture());
         OrderTicket capturedOrderTicket = orderArgumentCaptor.getValue();
 
         assertThat(capturedOrderTicket).isEqualTo(orderTicket);
@@ -67,17 +68,17 @@ class OrderTicketServiceTest {
 
     @Test
     void deleteOrder() {
-        given(orderRepositoryTest.existsById(anyLong())).willReturn(true);
-        orderServiceTest.deleteOrder(anyLong());
-        verify(orderRepositoryTest).deleteById(anyLong());
+        given(orderTicketRepositoryTest.existsById(anyLong())).willReturn(true);
+        orderTicketServiceTest.deleteOrder(anyLong());
+        verify(orderTicketRepositoryTest).deleteById(anyLong());
     }
 
     @Test
     void deleteMissingOrder() {
-        given(orderRepositoryTest.existsById(anyLong())).willReturn(false);
-        assertThatThrownBy(() -> orderServiceTest.deleteOrder(anyLong()))
+        given(orderTicketRepositoryTest.existsById(anyLong())).willReturn(false);
+        assertThatThrownBy(() -> orderTicketServiceTest.deleteOrder(anyLong()))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Order doesn't exist");
-        verify(orderRepositoryTest, never()).deleteById(anyLong());
+        verify(orderTicketRepositoryTest, never()).deleteById(anyLong());
     }
 }
