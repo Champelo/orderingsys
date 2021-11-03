@@ -2,7 +2,6 @@ package com.bakery.orderingsys.item;
 
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -46,7 +45,6 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
-    @Transactional
     public void updateItem(Long itemId, String itemName, Double price) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalStateException(
@@ -54,11 +52,11 @@ public class ItemService {
                 ));
         if (itemName != null && itemName.length() > 0 &&
         !Objects.equals(item.getItemName(), itemName)) {
-            item.setItemName((itemName));
+            item.setItemName(itemName);
         }
 
         if (price != null && price > 0){
-            item.setItemPrice((price));
+            item.setItemPrice(price);
         }
 
     }

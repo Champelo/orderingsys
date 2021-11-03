@@ -56,7 +56,7 @@ class OrderTicketControllerTest {
     }
 
     @Test
-    void getOrder() throws Exception {
+    void shouldGetOrder() throws Exception {
         final OrderTicket orderTicket = new OrderTicket();
 
         when(orderTicketServiceTest.getOrder(1L)).thenReturn(orderTicket);
@@ -69,7 +69,7 @@ class OrderTicketControllerTest {
     }
 
     @Test
-    void addNewOrder() throws Exception{
+    void shouldAddNewOrder() throws Exception{
 
         mockMvc.perform(post("/api/v1/order")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +80,7 @@ class OrderTicketControllerTest {
     }
 
     @Test
-    void deleteOrder() throws Exception{
+    void shouldDeleteOrder() throws Exception{
         mockMvc.perform(delete("/api/v1/order/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

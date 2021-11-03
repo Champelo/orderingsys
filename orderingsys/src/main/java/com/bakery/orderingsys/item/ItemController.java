@@ -20,18 +20,23 @@ public class ItemController {
         return itemService.getAllItems();
     }
 
+    @GetMapping(path = "/{itemId}")
+    @ResponseBody
+    Item getItem(@PathVariable("itemId") Long itemId) {
+        return itemService.getItem(itemId);
+    }
+
     @PostMapping
     public void createNewItem(@RequestBody Item item) {
         itemService.addNewItem(item);
     }
 
-    @DeleteMapping(path ="{itemId}")
+    @DeleteMapping(path ="/{itemId}")
     public void deleteItem(@PathVariable("itemId") Long itemId) {
         itemService.deleteItem(itemId);
     }
 
-    @PutMapping(path="{itemId}")
-    @Transactional
+    @PutMapping(path="/{itemId}")
     public void updateItemName(@PathVariable("itemId") Long itemId,
                                @RequestParam(required = false) String itemName,
                                @RequestParam(required = false) Double itemPrice) {
