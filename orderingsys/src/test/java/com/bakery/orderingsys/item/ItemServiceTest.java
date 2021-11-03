@@ -1,8 +1,6 @@
 package com.bakery.orderingsys.item;
 
-import com.bakery.orderingsys.item.Item;
-import com.bakery.orderingsys.item.ItemService;
-import com.bakery.orderingsys.item.ItemRepository;
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -33,14 +32,14 @@ class ItemServiceTest {
 
 
     @Test
-    void getAllItemsTest() {
+    void shouldGetAllItemsTest() {
 
         itemServiceTest.getAllItems();
         verify(itemRepositoryTest).findAll();
     }
 
     @Test
-    void getItem() {
+    void shouldGetItem() {
         Item item = new Item();
         given(itemRepositoryTest.findById(anyLong())).willReturn(Optional.of(item));
         itemServiceTest.getItem(anyLong());
@@ -49,7 +48,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void getMissingItem() {
+    void shouldNotGetMissingItem() {
         assertThatThrownBy(() -> itemServiceTest.getItem(anyLong()))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Item doesn't exist");
@@ -57,7 +56,7 @@ class ItemServiceTest {
 
 
     @Test
-    void addNewItemTest() {
+    void shouldAddNewItemTest() {
         //Given
         Item item = new Item(
                 "Strawberry Shortcake",
@@ -78,7 +77,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void ThrowWhenItemExists() {
+    void shouldThrowWhenItemExists() {
         //Giver
         Item item = new Item(
                 "Strawberry Shortcake",
@@ -101,7 +100,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void deleteItemTest() {
+    void shouldDeleteItemTest() {
        //Given
         given(itemRepositoryTest.existsById(anyLong())).willReturn(true);
        //When
@@ -111,7 +110,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void deleteItemMissingTest() {
+    void shouldNotDeleteItemMissingTest() {
         //Given
 
         given(itemRepositoryTest.existsById(anyLong())).willReturn(false);
@@ -123,7 +122,7 @@ class ItemServiceTest {
     }
 
     @Test
-    void updateItemNameTest() {
+    void shouldUpdateItemNameTest() {
         //Given
         Item item = new Item(
                 "Strawberry Shortcake",
@@ -137,10 +136,12 @@ class ItemServiceTest {
 
         //Then
         itemServiceTest.updateItem(anyLong(), "Blueberry Pie", 0.00);
+
+        verify(itemRepositoryTest).save(item);
     }
 
     @Test
-    void updateItemPriceTest() {
+    void shouldUpdateItemPriceTest() {
         //Given
         Item item = new Item(
                 "Strawberry Shortcake",
@@ -151,8 +152,28 @@ class ItemServiceTest {
         );
 
         given(itemRepositoryTest.findById(anyLong())).willReturn(Optional.of(item));
-
         //Then
         itemServiceTest.updateItem(anyLong(), null, 5.00);
+
+        verify(itemRepositoryTest).save(item);
+    }
+
+    @Test
+    void shouldNotUpdateMissingItemTest() {
+        //Given
+        Item item = new Item(
+                "Strawberry Shortcake",
+                1.50,
+                "Flour, Eggs, Strawberries, Milk, Sugar, Vanilla Extract",
+                false,
+                5
+        );
+
+
+        assertThatThrownBy(() -> itemServiceTest.updateItem(item.getItemId(), "Strawberry Shortcake", 5.99))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("item with id " + item.getItemId() + " does not exist");
+
+        verify(itemRepositoryTest, never()).save(any());
     }
 }

@@ -48,15 +48,17 @@ public class ItemService {
     public void updateItem(Long itemId, String itemName, Double price) {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalStateException(
-                        "item with id " + itemId + "  does not exist"
+                        "item with id " + itemId + " does not exist"
                 ));
         if (itemName != null && itemName.length() > 0 &&
         !Objects.equals(item.getItemName(), itemName)) {
             item.setItemName(itemName);
+            itemRepository.save(item);
         }
 
         if (price != null && price > 0){
             item.setItemPrice(price);
+            itemRepository.save(item);
         }
 
     }
